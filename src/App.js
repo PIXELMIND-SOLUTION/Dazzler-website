@@ -11,21 +11,34 @@ import Gallery from "./components/Gallery";
 import Testimonials from "./components/Testimonials";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
+import LoadingScreen from "./components/LoadingScreen";
 import { SERVICES, PKG } from "./data/constants";
 import "./styles/global.css";
 
 export default function App() {
+  const [loading, setLoading] = useState(true);
   const [scrollY, setScrollY] = useState(0);
   const [docHeight, setDocHeight] = useState(6000);
   const [selPkg, setSelPkg] = useState(1);
   const rootRef = useRef();
 
   useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 2500);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
     const onScroll = () => setScrollY(window.scrollY);
     const measure = () => setDocHeight(document.documentElement.scrollHeight);
+
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", measure);
+
     setTimeout(measure, 400);
+
     return () => {
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", measure);
@@ -34,8 +47,12 @@ export default function App() {
 
   const scrollPct = Math.min(
     scrollY / Math.max(docHeight - window.innerHeight, 1),
-    0
+    1
   );
+
+  if (loading) {
+    return <LoadingScreen />;
+  }
 
   return (
     <div
