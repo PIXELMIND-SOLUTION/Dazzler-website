@@ -82,15 +82,17 @@ export default function App() {
       />
 
       <Navbar />
-      <Hero />
-      <Services />
-      <StatsBand />
-      <Process />
-      <Pricing selPkg={selPkg} setSelPkg={setSelPkg} />
-      <Gallery />
-      <Testimonials />
-      <Contact />
-      <Footer />
+      <div className="mt-68">
+        <Hero />
+        <Services />
+        <StatsBand />
+        <Process />
+        <Pricing selPkg={selPkg} setSelPkg={setSelPkg} />
+        <Gallery />
+        <Testimonials />
+        <Contact />
+        <Footer />
+      </div>
     </div>
   );
 }
